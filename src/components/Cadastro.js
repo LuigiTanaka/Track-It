@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
 import axios from "axios";
 import styled from "styled-components";
 
 import logo from "../assets/images/logo.png";
-import { ThreeDots } from 'react-loader-spinner';
 
 export default function Cadastro() {
 
@@ -63,7 +63,7 @@ export default function Cadastro() {
                     <Input type="password" placeholder="senha" onChange={(e) => setSenha(e.target.value)} value={senha} required />
                     <Input type="name" placeholder="nome" onChange={(e) => setNome(e.target.value)} value={nome} required />
                     <Input type="url" placeholder="foto" onChange={(e) => setFoto(e.target.value)} value={foto} required />
-                    <Button type="submit">Entrar</Button>
+                    <Button type="submit">Cadastrar</Button>
                 </>
             )
         } else {
@@ -79,12 +79,12 @@ export default function Cadastro() {
         }
     }
 
-    const formulario = criarFormulario();
+    const formularioCadastro = criarFormulario();
 
     return (
         <Container>
             <img src={logo} alt="logo" />
-            <form onSubmit={fazerCadastro}>{formulario}</form>
+            <form onSubmit={fazerCadastro}>{formularioCadastro}</form>
             <h6 onClick={irLogin}>Já tem uma conta? Faça login!</h6>
         </Container>
     )
