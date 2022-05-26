@@ -9,7 +9,7 @@ import UserContext from "../contexts/UserContext";
 import logo from "../assets/images/logo.png";
 
 export default function Login() {
-    const { usuario, setUsuario } = useContext(UserContext);
+    const { setUsuario } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -28,12 +28,16 @@ export default function Login() {
             password: senha
         }
 
+        // luigi_tanaka@gmail.com
+        // 342189
+
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
 
         promise
             .then(res => {
                 console.log(res.data);
-                //navigate("/");
+                setUsuario(res.data);
+                navigate("/hoje");
             }).catch((err) => {
                 console.log(err);
                 alert("Dados inválidos, preencha os campos novamente");
