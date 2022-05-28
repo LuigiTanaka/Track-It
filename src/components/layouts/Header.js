@@ -26,6 +26,7 @@ const Topo = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;
     position: fixed;
     top: 0;
     right: 0;

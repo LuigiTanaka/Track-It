@@ -26,7 +26,6 @@ export default function Habitos() {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
 
         promise.then(res => {
-            console.log(res.data);
             if (res.data.length !== 0) {
                 const newListaDeHabitos = res.data
                 setListaDeHabitos(newListaDeHabitos);
@@ -42,9 +41,8 @@ export default function Habitos() {
                 <h4>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h4>
             );
         } else {
-            console.log(listaDeHabitos);
             return (
-                listaDeHabitos.map((hab, index) => <Habito key={index} nome={hab.name} dias={hab.days} id={hab.id}/>)
+                listaDeHabitos.map((hab, index) => <Habito key={index} nome={hab.name} dias={hab.days} id={hab.id} setListaDeHabitos={setListaDeHabitos}/>)
             );
         }
     }
@@ -82,9 +80,10 @@ export default function Habitos() {
 
 const Container = styled.div`
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     background-color: #F2F2F2;
-    padding: 92px 17px 180px 17px;
+    padding: 92px 17px 130px 17px;
 `
 
 const TopoMeusHabitos = styled.div`

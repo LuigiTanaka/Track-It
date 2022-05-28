@@ -5,13 +5,10 @@ import UserContext from "../contexts/UserContext";
 
 import lixeira from "../assets/images/lixeira.png";
 
-export default function Habito({ nome, dias, id }) {
+export default function Habito({ nome, dias, id, setListaDeHabitos }) {
     const { usuario } = useContext(UserContext);
 
     const selecoesDia = criaSelecaoBotoes();
-
-    console.log(nome);
-    console.log(dias);
 
     function criaSelecaoBotoes() {
         let selecoesDiaAux = [];
@@ -42,26 +39,43 @@ export default function Habito({ nome, dias, id }) {
     }
 
     function apagarHabito() {
+        if (window.confirm("Você realmente deseja excluir este hábito?")) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${usuario.token}`
+                }
+            }
+
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
+
+            promise.then(() => recarregaHabitos());
+        }
+    }
+
+    function recarregaHabitos() {
         const config = {
             headers: {
                 Authorization: `Bearer ${usuario.token}`
             }
         }
 
-        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
-        
-        promise.then(() => console.log({id}));
-    }
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
 
-    const botoesDias = criaBotoesDias();
+        promise.then(res => {
+            const newListaDeHabitos = res.data
+            setListaDeHabitos(newListaDeHabitos);
+        });
+}
 
-    return (
-        <Container>
-            <h2>{nome}</h2>
-            <Dias>{botoesDias}</Dias>
-            <Lixeira src={lixeira} alt="lixeira" onClick={apagarHabito}></Lixeira>
-        </Container>
-    )
+const botoesDias = criaBotoesDias();
+
+return (
+    <Container>
+        <h2>{nome}</h2>
+        <Dias>{botoesDias}</Dias>
+        <Lixeira src={lixeira} alt="lixeira" onClick={apagarHabito} />
+    </Container>
+)
 }
 
 const Container = styled.div`
@@ -99,7 +113,7 @@ const BotaoDia = styled.div`
     line-height: 25px;
     text-align: center;
     margin-right: 4px;
-    border: 1px solid ${props => props.selecionado ? "#CFCFCF" : "#D5D5D5"};;
+    border: 1px solid ${props => props.selecionado ? "#CFCFCF" : "#D5D5D5"};
     background-color: ${props => props.selecionado ? "#CFCFCF" : "#FFFFFF"};
     color: ${props => !props.selecionado ? "#CFCFCF" : "#FFFFFF"};
 `

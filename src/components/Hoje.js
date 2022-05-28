@@ -1,34 +1,54 @@
-import { useContext, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import "dayjs/locale/pt-br"
+import "dayjs/locale/pt-br";
 
 import UserContext from "../contexts/UserContext";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
+import HabitoHoje from "./HabitoHoje";
 
 
 export default function Hoje() {
 
-    const { progresso, setProgresso } = useContext(UserContext);
+    const { usuario, progresso, setProgresso } = useContext(UserContext);
+
+    const [listaDeHabitosHoje, setListaDeHabitosHoje] = useState([]);
 
     const now = dayjs().locale("pt-br");
     const diaMes = now.format("DD/MM");
     const diaSemana = criaDiaSemana(now.format("dddd"))
 
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${usuario.token}`
+            }
+        }
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
+
+        promise.then(res => {
+            if (res.data.length !== 0) {
+                const newListaDeHabitosHoje = res.data
+                setListaDeHabitosHoje(newListaDeHabitosHoje);
+            }
+        });
+    }, [])
+
     function criaDiaSemana(dia) {
         let parar = false;
         let diaSemFeira = ''
         for (let i = 0; i < dia.length && parar === false; i++) {
-            if(dia[i] !== '-') {
+            if (dia[i] !== '-') {
                 i === 0 ? diaSemFeira += dia[i].toUpperCase() : diaSemFeira += dia[i]
             } else {
                 parar = true;
             }
         }
-        return(diaSemFeira);
+        return (diaSemFeira);
     }
 
     function criarStatus() {
@@ -43,19 +63,25 @@ export default function Hoje() {
         }
     }
 
-    function renderizarHabitos() {
-        
+    function renderizarHabitosHoje() {
+        if (listaDeHabitosHoje.length === 0) {
+            return (null);
+        } else {
+            return (
+                listaDeHabitosHoje.map((habHoje, index) => <HabitoHoje key={index} id={habHoje.id} nome={habHoje.name} feito={habHoje.done} sequenciaAtual={habHoje.currentSequence} maiorSequencia={habHoje.highestSequence} setListaDeHabitosHoje={setListaDeHabitosHoje} />)
+            );
+        }
     }
 
     const status = criarStatus();
-    const habitos = renderizarHabitos();
+    const habitosHoje = renderizarHabitosHoje();
 
-    return(
+    return (
         <Container>
             <Header />
             <Dia>{diaSemana}, {diaMes}</Dia>
             <Status>{status}</Status>
-            <Habitos>{habitos}</Habitos>
+            <HabitosHoje>{habitosHoje}</HabitosHoje>
             <Footer />
         </Container>
     )
@@ -63,9 +89,10 @@ export default function Hoje() {
 
 const Container = styled.div`
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     background-color: #F2F2F2;
-    padding: 100px 17px 180px 17px;
+    padding: 100px 17px 130px 17px;
 `
 
 const Dia = styled.div`
@@ -77,7 +104,7 @@ const Dia = styled.div`
 
 const Status = styled.div`
     font-weight: 400;
-    font-size: 17.976px;
+    font-size: 18px;
     line-height: 22px;
 
     h3 {
@@ -89,6 +116,6 @@ const Status = styled.div`
     }
 `
 
-const Habitos = styled.div`
+const HabitosHoje = styled.div`
 
 `

@@ -46,6 +46,7 @@ const Menu = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 32px;
+    z-index: 1;
     position: fixed;
     bottom: 0;
     right: 0;
