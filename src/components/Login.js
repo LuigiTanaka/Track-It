@@ -28,9 +28,6 @@ export default function Login() {
             password: senha
         }
 
-        // luigi_tanaka@gmail.com
-        // 342189
-
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
 
         promise
