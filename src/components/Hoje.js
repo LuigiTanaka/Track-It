@@ -20,6 +20,10 @@ export default function Hoje() {
     const diaMes = now.format("DD/MM");
     const diaSemana = criaDiaSemana(now.format("dddd"))
 
+    const numHabitosConcluidos = listaDeHabitosHoje.filter((habHoje) => habHoje.done).length;
+    const numHabitosHoje = listaDeHabitosHoje.length;
+    const porcentagem = Math.round((numHabitosConcluidos/numHabitosHoje)*100);
+    setProgresso(porcentagem);
 
     useEffect(() => {
         const config = {
@@ -52,7 +56,7 @@ export default function Hoje() {
     }
 
     function criarStatus() {
-        if (progresso === 0) {
+        if (progresso === 0  || isNaN(progresso)) {
             return (
                 <h3>Nenhum hábito concluído ainda</h3>
             )

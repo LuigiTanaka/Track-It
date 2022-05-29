@@ -4,11 +4,16 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
 import certinho from "../assets/images/certinho.png";
+import { useEffect } from "react/cjs/react.production.min";
 
 export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSequencia, setListaDeHabitosHoje }) {
     const { usuario } = useContext(UserContext);
 
     let igualSeqAtual = false;
+
+    if(sequenciaAtual !== 0 && sequenciaAtual === maiorSequencia) {
+        igualSeqAtual = true;
+    }
 
     function marcarDesmarcar() {
         const config = {
