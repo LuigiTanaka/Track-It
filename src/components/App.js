@@ -9,11 +9,10 @@ import Hoje from "./Hoje";
 import Historico from "./Historico";
 
 export default function App() {
-    //crie as variaveis globais aqui
+
     const [usuario, setUsuario] = useState({});
     const [progresso, setProgresso] = useState(0);
 
-    //passe as variaveis/setVariaveis globais pelo contextValue
     const contextValue = { usuario, setUsuario, progresso, setProgresso };
 
     return (
@@ -30,16 +29,3 @@ export default function App() {
         </UserContext.Provider>
     )
 }
-
-/* fazer isso para usar as variaveis globais dentro dos componentes filhos
-
-import { useContext } from "react";
-
-import UserContext from "../contexts/UserContext";
-
-function ComponenteB() {
-	const { tasks, setTasks } = useContext(UserContext);
-
-	// ...
-}
-*/

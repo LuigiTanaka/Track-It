@@ -80,11 +80,12 @@ return (
 
 const Container = styled.div`
     width: 100%;
-    height: 90px;
+    min-height: 90px;
+    height: fit-content;
     background: #FFFFFF;
     border-radius: 5px;
     margin-top: 10px;
-    padding: 13px 25px 15px 15px;
+    padding: 13px 28px 15px 15px;
     position: relative;
 
 
@@ -93,6 +94,7 @@ const Container = styled.div`
         font-size: 20px;
         line-height: 25px;
         color: #666666;
+        word-wrap: break-word;
     }
 `
 

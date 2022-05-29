@@ -63,11 +63,11 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
 
     return (
         <Container>
-            <div>
+            <Texto>
                 <h2>{nome}</h2>
                 <h3>Sequência atual: <SeqAtual feito={feito}>{sequenciaAtual} dias</SeqAtual></h3>
                 <h3>Seu recorde: <Recorde igualSeqAtual={igualSeqAtual}>{maiorSequencia} dias</Recorde></h3>
-            </div>
+            </Texto>
             <Concluido feito={feito} onClick={() => marcarDesmarcar()}>
                 <img src={certinho} alt="certinho" />
             </Concluido>
@@ -77,7 +77,8 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
 
 const Container = styled.div`
     width: 100%;
-    height: 94px;
+    min-height: 94px;
+    height: fit-content;
     background-color: #FFFFFF;
     border-radius: 5px;
     display: flex;
@@ -91,6 +92,7 @@ const Container = styled.div`
         line-height: 25px;
         color: #666666;
         margin-bottom: 8px;
+        word-wrap: break-word;
     }
 
     h3 {
@@ -103,6 +105,10 @@ const Container = styled.div`
     &:first-child {
         margin-top: 28px;
     }
+`
+
+const Texto = styled.div`
+    width: calc(100% - 80px);
 `
 
 const Concluido = styled.div`
