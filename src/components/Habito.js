@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
@@ -26,13 +26,13 @@ export default function Habito({ nome, dias, id, setListaDeHabitos }) {
         return (
             selecoesDia.map((selecionado, index) => {
                 if (index === 0) {
-                    return (<BotaoDia selecionado={selecionado}>D</BotaoDia>)
+                    return (<BotaoDia key={index} selecionado={selecionado}>D</BotaoDia>)
                 } else if (index === 1 || index === 5 || index === 6) {
-                    return (<BotaoDia selecionado={selecionado}>S</BotaoDia>)
+                    return (<BotaoDia key={index} selecionado={selecionado}>S</BotaoDia>)
                 } else if (index === 2) {
-                    return (<BotaoDia selecionado={selecionado}>T</BotaoDia>)
+                    return (<BotaoDia key={index} selecionado={selecionado}>T</BotaoDia>)
                 } else {
-                    return (<BotaoDia selecionado={selecionado}>Q</BotaoDia>)
+                    return (<BotaoDia key={index} selecionado={selecionado}>Q</BotaoDia>)
                 }
             })
         )
@@ -87,9 +87,6 @@ const Container = styled.div`
     padding: 13px 25px 15px 15px;
     position: relative;
 
-    &:first-child {
-        margin-top: 20px;
-    }
 
     h2 {
         font-weight: 400;

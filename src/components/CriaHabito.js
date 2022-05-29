@@ -4,14 +4,14 @@ import { useState, useContext } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import UserContext from "../contexts/UserContext";
 
-export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriarHabito }) {
+export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriarHabito, criarHabito }) {
     const { usuario } = useContext(UserContext);
 
     const [dias, setDias] = useState([]);
     const [nome, setNome] = useState("");
     const [carregando, setCarregando] = useState(false);
 
-    function criarHabito(event) {
+    function salvarHabito(event) {
         event.preventDefault();
 
         setCarregando(true);
@@ -36,6 +36,9 @@ export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriar
                 listaDeHabitos.push(res.data);
                 const newListaDeHabitos = [...listaDeHabitos];
                 setListaDeHabitos(newListaDeHabitos);
+                setDias([]);
+                setNome("");
+                setCarregando(false);
             }).catch((err) => {
                 alert(err.message);
                 setDias([]);
@@ -75,13 +78,13 @@ export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriar
             return (
                 selecoesDia.map((selecionado, index) => {
                     if (index === 0) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>D</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>D</BotaoDia>)
                     } else if (index === 1 || index === 5 || index === 6) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>S</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>S</BotaoDia>)
                     } else if (index === 2) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>T</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>T</BotaoDia>)
                     } else {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>Q</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)}>Q</BotaoDia>)
                     }
                 })
             )
@@ -89,13 +92,13 @@ export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriar
             return (
                 selecoesDia.map((selecionado, index) => {
                     if (index === 0) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>D</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>D</BotaoDia>)
                     } else if (index === 1 || index === 5 || index === 6) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>S</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>S</BotaoDia>)
                     } else if (index === 2) {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>T</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>T</BotaoDia>)
                     } else {
-                        return (<BotaoDia type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>Q</BotaoDia>)
+                        return (<BotaoDia key={index} type="button" selecionado={selecionado} onClick={() => selecionaDia(index)} disabled={true}>Q</BotaoDia>)
                     }
                 })
             )
@@ -132,8 +135,8 @@ export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriar
     const formularioHabito = criaFormularioHabito();
 
     return (
-        <Container>
-            <form onSubmit={criarHabito}>
+        <Container visivel={criarHabito}>
+            <form onSubmit={salvarHabito}>
                 {formularioHabito}
             </form>
         </Container>
@@ -148,6 +151,7 @@ const Container = styled.div`
     margin-top: 10px;
     padding: 18px 18px 15px 19px;
     position: relative;
+    display: ${props => props.visivel ? "inherit" : "none"};
 
     &:first-child {
         margin-top: 20px;

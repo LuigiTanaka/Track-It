@@ -7,7 +7,7 @@ import UserContext from "../../contexts/UserContext";
 
 export default function Footer() {
 
-    const { progresso, setProgresso } = useContext(UserContext);
+    const { progresso } = useContext(UserContext);
 
     return (
         <Menu>

@@ -32,11 +32,9 @@ export default function Login() {
 
         promise
             .then(res => {
-                console.log(res.data);
                 setUsuario(res.data);
                 navigate("/hoje");
             }).catch((err) => {
-                console.log(err);
                 alert("Dados inválidos, preencha os campos novamente");
                 limparCampos();
                 setCarregando(false);

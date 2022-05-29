@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import UserContext from "../contexts/UserContext";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 

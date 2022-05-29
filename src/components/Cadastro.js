@@ -33,10 +33,8 @@ export default function Cadastro() {
 
         promise
             .then(res => {
-                console.log(res.data);
                 navigate("/");
             }).catch((err) => {
-                console.log(err);
                 alert("Dados inválidos, preencha os campos novamente");
                 limparCampos();
                 setCarregando(false);

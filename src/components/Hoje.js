@@ -18,12 +18,7 @@ export default function Hoje() {
 
     const now = dayjs().locale("pt-br");
     const diaMes = now.format("DD/MM");
-    const diaSemana = criaDiaSemana(now.format("dddd"))
-
-    const numHabitosConcluidos = listaDeHabitosHoje.filter((habHoje) => habHoje.done).length;
-    const numHabitosHoje = listaDeHabitosHoje.length;
-    const porcentagem = Math.round((numHabitosConcluidos/numHabitosHoje)*100);
-    setProgresso(porcentagem);
+    const diaSemana = criaDiaSemana(now.format("dddd"));
 
     useEffect(() => {
         const config = {
@@ -38,9 +33,22 @@ export default function Hoje() {
             if (res.data.length !== 0) {
                 const newListaDeHabitosHoje = res.data
                 setListaDeHabitosHoje(newListaDeHabitosHoje);
+                atualizaProgresso(newListaDeHabitosHoje);
             }
         });
-    }, [])
+    }, []);
+
+    function atualizaProgresso(newListaDeHabitosHoje) {
+        const numHabitosConcluidos = newListaDeHabitosHoje.filter((habHoje) => habHoje.done).length;
+        const numHabitosHoje = newListaDeHabitosHoje.length;
+        let porcentagem;
+        if (numHabitosConcluidos !== 0) {
+            porcentagem = Math.round((numHabitosConcluidos / numHabitosHoje) * 100);
+        } else {
+            porcentagem = 0;
+        }
+        setProgresso(porcentagem);
+    }
 
     function criaDiaSemana(dia) {
         let parar = false;
@@ -56,7 +64,7 @@ export default function Hoje() {
     }
 
     function criarStatus() {
-        if (progresso === 0  || isNaN(progresso)) {
+        if (progresso === 0 || isNaN(progresso)) {
             return (
                 <h3>Nenhum hábito concluído ainda</h3>
             )

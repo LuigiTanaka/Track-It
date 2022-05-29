@@ -1,17 +1,16 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
 import certinho from "../assets/images/certinho.png";
-import { useEffect } from "react/cjs/react.production.min";
 
 export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSequencia, setListaDeHabitosHoje }) {
-    const { usuario } = useContext(UserContext);
+    const { usuario, setProgresso } = useContext(UserContext);
 
     let igualSeqAtual = false;
 
-    if(sequenciaAtual !== 0 && sequenciaAtual === maiorSequencia) {
+    if (sequenciaAtual !== 0 && sequenciaAtual === maiorSequencia) {
         igualSeqAtual = true;
     }
 
@@ -28,7 +27,7 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
         } else {
             const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config);
             promise.then(() => recarregarHabitosHoje());
-            
+
         }
     }
 
@@ -45,8 +44,21 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
             if (res.data.length !== 0) {
                 const newListaDeHabitosHoje = res.data;
                 setListaDeHabitosHoje(newListaDeHabitosHoje);
+                atualizaProgresso(newListaDeHabitosHoje);
             }
         });
+    }
+
+    function atualizaProgresso(newListaDeHabitosHoje) {
+        const numHabitosConcluidos = newListaDeHabitosHoje.filter((habHoje) => habHoje.done).length;
+        const numHabitosHoje = newListaDeHabitosHoje.length;
+        let porcentagem;
+        if (numHabitosConcluidos !== 0) {
+            porcentagem = Math.round((numHabitosConcluidos / numHabitosHoje) * 100);
+        } else {
+            porcentagem = 0;
+        }
+        setProgresso(porcentagem);
     }
 
     return (

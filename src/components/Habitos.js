@@ -42,21 +42,16 @@ export default function Habitos() {
             );
         } else {
             return (
-                listaDeHabitos.map((hab, index) => <Habito key={index} nome={hab.name} dias={hab.days} id={hab.id} setListaDeHabitos={setListaDeHabitos}/>)
+                listaDeHabitos.map((hab, index) => <Habito key={index} nome={hab.name} dias={hab.days} id={hab.id} setListaDeHabitos={setListaDeHabitos} />)
             );
         }
     }
 
 
     function criarNovoHabito() {
-
-        if (criarHabito) {
-            return (
-                <CriaHabito listaDeHabitos={listaDeHabitos} setListaDeHabitos={setListaDeHabitos} setCriarHabito={setCriarHabito}/>
-            );
-        } else {
-            return null;
-        }
+        return (
+            <CriaHabito listaDeHabitos={listaDeHabitos} setListaDeHabitos={setListaDeHabitos} setCriarHabito={setCriarHabito} criarHabito={criarHabito} />
+        );
     }
 
     const habitos = renderizarHabitos();
@@ -69,7 +64,7 @@ export default function Habitos() {
                 <h3>Meus hábitos</h3>
                 <Botao onClick={() => setCriarHabito(true)}>+</Botao>
             </TopoMeusHabitos>
-            <NovoHabito>{novoHabito}</NovoHabito>
+            {novoHabito}
             <MeusHabitos>
                 {habitos}
             </MeusHabitos>
@@ -110,9 +105,6 @@ const Botao = styled.div`
     color: #FFFFFF;
     background-color: #52B6FF;
     border-radius: 5px;
-`
-
-const NovoHabito = styled.div`
 `
 
 const MeusHabitos = styled.div`
