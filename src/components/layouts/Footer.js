@@ -65,6 +65,6 @@ const BotaoCircular = styled.div`
     height: 90px;
     position: absolute;
     top: -30px;
-    left: 37.5%;
-    right: 62.5%;
+    left: calc(50% - 45px);
+    right: calc(50% - 45px);
 `

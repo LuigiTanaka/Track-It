@@ -83,6 +83,7 @@ const Container = styled.div`
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 13px 13px 12px 15px;
     margin-top: 10px;
 
