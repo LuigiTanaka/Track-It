@@ -61,12 +61,39 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
         setProgresso(porcentagem);
     }
 
+    function renderizaSeqAtual() {
+        if(sequenciaAtual === 1) {
+            return (
+                <SeqAtual feito={feito}>{sequenciaAtual} dia</SeqAtual>
+            );
+        } else {
+            return (
+                <SeqAtual feito={feito}>{sequenciaAtual} dias</SeqAtual>
+            );
+        }
+    }
+
+    function renderizaRecorde() {
+        if(maiorSequencia === 1) {
+            return (
+                <Recorde igualSeqAtual={igualSeqAtual} feito={feito}>{maiorSequencia} dia</Recorde>
+            );
+        } else {
+            return (
+                <Recorde igualSeqAtual={igualSeqAtual} feito={feito}>{maiorSequencia} dias</Recorde>
+            );
+        }
+    }
+
+    const sequencia = renderizaSeqAtual();
+    const recorde = renderizaRecorde();
+
     return (
         <Container>
             <Texto>
                 <h2>{nome}</h2>
-                <h3>Sequência atual: <SeqAtual feito={feito}>{sequenciaAtual} dias</SeqAtual></h3>
-                <h3>Seu recorde: <Recorde igualSeqAtual={igualSeqAtual} feito={feito}>{maiorSequencia} dias</Recorde></h3>
+                <h3>Sequência atual: {sequencia}</h3>
+                <h3>Seu recorde: {recorde}</h3>
             </Texto>
             <Concluido feito={feito} onClick={() => marcarDesmarcar()}>
                 <img src={certinho} alt="certinho" />
