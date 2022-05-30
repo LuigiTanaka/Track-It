@@ -14,37 +14,41 @@ export default function CriaHabito({ listaDeHabitos, setListaDeHabitos, setCriar
     function salvarHabito(event) {
         event.preventDefault();
 
-        setCarregando(true);
+        if (dias.length !== 0) {
+            setCarregando(true);
 
-        const body = {
-            name: nome,
-            days: dias
-        }
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${usuario.token}`
+            const body = {
+                name: nome,
+                days: dias
             }
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${usuario.token}`
+                }
+            }
+
+            const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+
+            promise
+                .then(res => {
+                    setCarregando(false);
+                    setCriarHabito(false);
+                    listaDeHabitos.push(res.data);
+                    const newListaDeHabitos = [...listaDeHabitos];
+                    setListaDeHabitos(newListaDeHabitos);
+                    setDias([]);
+                    setNome("");
+                    setCarregando(false);
+                }).catch((err) => {
+                    alert(err.message);
+                    setDias([]);
+                    setNome("");
+                    setCarregando(false);
+                })
+        } else {
+            alert("Selecione pelo menos um dia");
         }
-
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
-
-        promise
-            .then(res => {
-                setCarregando(false);
-                setCriarHabito(false);
-                listaDeHabitos.push(res.data);
-                const newListaDeHabitos = [...listaDeHabitos];
-                setListaDeHabitos(newListaDeHabitos);
-                setDias([]);
-                setNome("");
-                setCarregando(false);
-            }).catch((err) => {
-                alert(err.message);
-                setDias([]);
-                setNome("");
-                setCarregando(false);
-            })
     }
 
     const selecoesDia = criaSelecaoBotoes();

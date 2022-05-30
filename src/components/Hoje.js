@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { BallTriangle } from 'react-loader-spinner';
 
 import UserContext from "../contexts/UserContext";
 import Header from "./layouts/Header";
@@ -77,7 +78,11 @@ export default function Hoje() {
 
     function renderizarHabitosHoje() {
         if (listaDeHabitosHoje.length === 0) {
-            return (null);
+            return (
+                <Carregando>
+                    <BallTriangle height={80} width={80} color="#126BA5" />
+                </Carregando>
+            );
         } else {
             return (
                 listaDeHabitosHoje.map((habHoje, index) => <HabitoHoje key={index} id={habHoje.id} nome={habHoje.name} feito={habHoje.done} sequenciaAtual={habHoje.currentSequence} maiorSequencia={habHoje.highestSequence} setListaDeHabitosHoje={setListaDeHabitosHoje} />)
@@ -93,7 +98,7 @@ export default function Hoje() {
             <Header />
             <Dia>{diaSemana}, {diaMes}</Dia>
             <Status>{status}</Status>
-            <HabitosHoje>{habitosHoje}</HabitosHoje>
+            {habitosHoje}
             <Footer />
         </Container>
     )
@@ -128,6 +133,9 @@ const Status = styled.div`
     }
 `
 
-const HabitosHoje = styled.div`
-
+const Carregando = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
 `

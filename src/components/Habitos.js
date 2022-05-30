@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-
+import { BallTriangle } from 'react-loader-spinner';
 
 import UserContext from "../contexts/UserContext";
 import Header from "./layouts/Header";
@@ -29,16 +29,26 @@ export default function Habitos() {
             if (res.data.length !== 0) {
                 const newListaDeHabitos = res.data
                 setListaDeHabitos(newListaDeHabitos);
+            } else {
+                habitosVazio = renderizarHabitosVazio();
             }
         });
 
-    }, [])
+    }, []);
+
+    function renderizarHabitosVazio() {
+        return (
+            <h4>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h4>
+        )
+    }
 
     function renderizarHabitos() {
 
         if (listaDeHabitos.length === 0) {
             return (
-                <h4>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h4>
+                <Carregando>
+                    <BallTriangle height={80} width={80} color="#126BA5" />
+                </Carregando>
             );
         } else {
             return (
@@ -54,6 +64,7 @@ export default function Habitos() {
         );
     }
 
+    let habitosVazio;
     const habitos = renderizarHabitos();
     const novoHabito = criarNovoHabito();
 
@@ -66,6 +77,7 @@ export default function Habitos() {
             </TopoMeusHabitos>
             {novoHabito}
             <MeusHabitos>
+                {habitosVazio}
                 {habitos}
             </MeusHabitos>
             <Footer />
@@ -118,5 +130,12 @@ const MeusHabitos = styled.div`
         color: #666666;
         margin-top: 30px;
     }
+`
+
+const Carregando = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
 `
 

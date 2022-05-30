@@ -66,7 +66,7 @@ export default function HabitoHoje({ id, nome, feito, sequenciaAtual, maiorSeque
             <Texto>
                 <h2>{nome}</h2>
                 <h3>Sequência atual: <SeqAtual feito={feito}>{sequenciaAtual} dias</SeqAtual></h3>
-                <h3>Seu recorde: <Recorde igualSeqAtual={igualSeqAtual}>{maiorSequencia} dias</Recorde></h3>
+                <h3>Seu recorde: <Recorde igualSeqAtual={igualSeqAtual} feito={feito}>{maiorSequencia} dias</Recorde></h3>
             </Texto>
             <Concluido feito={feito} onClick={() => marcarDesmarcar()}>
                 <img src={certinho} alt="certinho" />
@@ -132,5 +132,5 @@ const SeqAtual = styled.span`
 `
 
 const Recorde = styled.span`
-    color: ${props => props.igualSeqAtual ? "#8FC549" : "#666666"};
+    color: ${props => (props.igualSeqAtual && props.feito) ? "#8FC549" : "#666666"};
 `
