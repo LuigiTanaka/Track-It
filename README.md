@@ -15,6 +15,8 @@ Esse é um projeto construído para colocar em prática os conteúdos de front-e
 - Deleção de hábitos;
 - Filtragem dos hábitos considerando o dia atual;
 - Marcação e desmarcação de um hábito como feito;
+- Sequência atual sem falhas na conclusão dos hábitos;
+- Recorde de sequência sem falhas na conclusão dos hábitos;
 - Barra de progresso diário;
 
 ## Tecnologias
