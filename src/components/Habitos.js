@@ -15,6 +15,7 @@ export default function Habitos() {
 
     const [listaDeHabitos, setListaDeHabitos] = useState([])
     const [criarHabito, setCriarHabito] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const config = {
@@ -32,6 +33,8 @@ export default function Habitos() {
             } else {
                 habitosVazio = renderizarHabitosVazio();
             }
+
+            setLoading(false);
         });
 
     }, []);
@@ -44,7 +47,7 @@ export default function Habitos() {
 
     function renderizarHabitos() {
 
-        if (listaDeHabitos.length === 0) {
+        if (loading) {
             return (
                 <Carregando>
                     <BallTriangle height={80} width={80} color="#126BA5" />

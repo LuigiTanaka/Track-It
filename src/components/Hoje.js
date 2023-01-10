@@ -16,6 +16,9 @@ export default function Hoje() {
     const { usuario, progresso, setProgresso } = useContext(UserContext);
 
     const [listaDeHabitosHoje, setListaDeHabitosHoje] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    console.log(loading);
 
     const now = dayjs().locale("pt-br");
     const diaMes = now.format("DD/MM");
@@ -36,6 +39,7 @@ export default function Hoje() {
                 setListaDeHabitosHoje(newListaDeHabitosHoje);
                 atualizaProgresso(newListaDeHabitosHoje);
             }
+            setLoading(false);
         });
     }, []);
 
@@ -77,7 +81,7 @@ export default function Hoje() {
     }
 
     function renderizarHabitosHoje() {
-        if (listaDeHabitosHoje.length === 0) {
+        if (loading) {
             return (
                 <Carregando>
                     <BallTriangle height={80} width={80} color="#126BA5" />
